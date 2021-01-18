@@ -17,4 +17,6 @@ $mapeoRutas =
           array('controller' =>'defaultController', 'action' =>'inicio'),
         'ver' =>
           array('controller' =>'AgendaController', 'action' =>'verTodaAgenda'),
+        'quitar' =>
+          array('controller' =>'AgendaController', 'action' =>'eliminarAmigo'),
        );

@@ -2,11 +2,18 @@
 
 class AgendaRepositorio
 {
-    public function findAllAmigos():array
+    public function findAllAmigos(bool $conId=false):array
     {
-        $sql='SELECT a.Nombre, Edad, Telefono, p.nombre as Provincia
+        if($conId){
+            $sql='SELECT a.Nombre, Edad, Telefono, p.nombre as Provincia, idAgenda
             FROM agenda AS a 
                 INNER JOIN provincia AS p on a.codProvincia = p.codProvincia';
+            
+        }else{
+            $sql='SELECT a.Nombre, Edad, Telefono, p.nombre as Provincia
+            FROM agenda AS a 
+                INNER JOIN provincia AS p on a.codProvincia = p.codProvincia';
+        }
         require_once require __DIR__ . '/../../core/conexionBd.inc';
 
         try {
@@ -38,8 +45,12 @@ class AgendaRepositorio
         SELECT :nombre, :edad, :tefno, codProvincia
         FROM provincia as p
         WHERE p.nombre = :provincia';
-
         return true;
     }
+
+    public function deleteAmigo(int $id):bool{
+        return true;
+    }
+
 
 }

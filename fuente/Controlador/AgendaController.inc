@@ -8,6 +8,24 @@ class AgendaController{
         $datos=(new AgendaRepositorio())->findAllAmigos();
         include __DIR__ . '/../../app/plantillas/mostrarTodas.php';
     }
+
+    public function eliminarAmigo(){
+        if(!isset($_POST['ok'])){
+            require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
+            $datos=(new AgendaRepositorio())->findAllAmigos(true); 
+            //die($var_dump($datos));
+            include __DIR__ . '/../../app/plantillas/eliminarAmigos.php';
+        }else{
+            $aEliminar=$_POST['borrar'];
+            //die(var_dump($aEliminar));
+            require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
+            $agendaRepositorio = new AgendaRepositorio();
+            
+            foreach($aEliminar as $value){
+                $agendaRepositorio->deleteAmigo((int) $value);
+            }
+        }
+    }
 }
 
 
