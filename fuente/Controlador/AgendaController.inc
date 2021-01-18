@@ -6,7 +6,7 @@ class AgendaController{
     {
         require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
         $datos=(new AgendaRepositorio())->findAllAmigos();
-        include __DIR__ . '/../../app/plantillas/mostrarTodas.php';
+        include __DIR__ . '/../../app/plantillas/mostrarAmigos.php';
     }
 
     public function eliminarAmigo(){
@@ -20,10 +20,15 @@ class AgendaController{
             //die(var_dump($aEliminar));
             require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
             $agendaRepositorio = new AgendaRepositorio();
-            
-            foreach($aEliminar as $value){
+            $contador=0;
+            foreach($aEliminar as $key => $value){
+                //die(var_dump($value));
                 $agendaRepositorio->deleteAmigo((int) $value);
+                $contador++;
             }
+            $datos=(new AgendaRepositorio())->findAllAmigos();
+            $eliminados = $contador;
+            include __DIR__ . '/../../app/plantillas/eliminarAmigos.php';
         }
     }
 }

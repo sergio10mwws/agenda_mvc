@@ -13,7 +13,8 @@
   <meta charset="utf-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href='web/css/resposnive.css' />
+
+  <?php include  __DIR__ . '/../../web/include/js.inc' ?>
   <style>
     header {
       background-color: orange;
