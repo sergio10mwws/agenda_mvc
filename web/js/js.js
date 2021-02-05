@@ -6,6 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
             title: `¡Perfecto!`,
             text: `Se han elminado ${eliminados_DOM_texto} con éxito`,
         })
-        eliminados_DOM.parenNode.removeChilds()
+        eliminados_DOM.parenNode.removeChilds();
     }
 })
