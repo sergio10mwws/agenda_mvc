@@ -36,6 +36,19 @@ class UsuarioRepositorio
         }
     }
 
+    public function findNombreIdUsuarioByUsuario(string $usuario):array
+    {
+        $sql='SELECT u.Usuario, r.nombre 
+        FROM registro r INNER JOIN ussuario u
+            ON r.idUsuario= u.idUsuario
+            WHERE u.usuario = :usu';
+            $con=(new ConexionBd())->getConexion();
+            $stn=$con->prepare($sql);
+            $stn->bindValue(':usu', $usuario) ;
+            $stn->execute();
+            return $stn->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function addInfUsuario(Registro $reg)
     {
         $sql = "exec addNewUser :nom,:ape,:call,:ciu,:prov,:cp,:corr,:tel";

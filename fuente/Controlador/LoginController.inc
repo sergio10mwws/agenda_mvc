@@ -11,11 +11,14 @@ use miId\App\fuente\Repositorio\UsuarioRepositorio;
                 $usuario=$_POST['usuario'];
                 
                 //require_once __DIR__ . '/../Repositorio/UsuarioRepositorio.inc';
-                $hash = ((new UsuarioRepositorio)->findPass($usuario));
+                $objUsuarioRep = new UsuarioRepositorio();
+                $hash = $objUsuarioRep->findPass($usuario);
                 //require_once __DIR__ . '/../Modelo/Usuario.inc';
                 //die(var_dump($hash));
                 if(Usuario::isPassOk($pass, $hash)){
-                    $_SESSION['login'] = true;
+                    $infUsu=$objUsuarioRep->findNombreIdUsuarioByUsuario($_POST['usuario']);
+                    $_SESSION['usuario'] = $infUsu['idUsuario'];
+                    $_SESSION['nombre'] = $infUsu['nombre'];
                     header('Location: index.php');
                 }else{
                     $error = true;
@@ -25,8 +28,11 @@ use miId\App\fuente\Repositorio\UsuarioRepositorio;
         }
 
         public function cierraSesion(){
-            if(isset($_SESSION['login'])){
-                unset($_SESSION['login']);
+            if(isset($_SESSION['usuario'])){
+                unset($_SESSION['usuario']);
+                unset($_SESSION['nombre']);
+                session_unset();
+                session_destroy();
                 header('Location: index.php');
             }
         }

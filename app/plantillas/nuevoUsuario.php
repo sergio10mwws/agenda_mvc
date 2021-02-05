@@ -34,10 +34,10 @@ ob_start();
         </fieldset>
         <fieldset>
             <legend>Información de registro</legend>
-            <label>Usiario: <input type="text" name='reg[usuario]' autocomplete="off" required></label>
-            <label>Contraseña: <input type="pass" name='reg[pass]' autocomplete="off" required></label>
+            <label>Usiario: <input type="text" name='reg[usu]' autocomplete="off" required></label>
+            <label>Contraseña: <input type="password" name='reg[pass]' autocomplete="off" required></label>
         </fieldset>
-        <input type="text" value="Registrarme" value="ok">
+        <input type="submit" value="Registrarme" value="ok">
         <input type="reset" value="Limpiar">
     </form>
 </body>

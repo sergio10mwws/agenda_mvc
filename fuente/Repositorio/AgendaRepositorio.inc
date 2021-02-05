@@ -6,23 +6,26 @@ use miId\App\fuente\Modelo\Amigo;
 
 class AgendaRepositorio
 {
-    public function findAllAmigos(bool $conId=false):array
+    public function findAllAmigosByUsu(int $idUsu, bool $conId=false):array
     {
         if($conId){
             $sql='SELECT a.nombre, edad, tlfno, p.nombre as Provincia, idAgenda
             FROM agenda AS a 
-                INNER JOIN provincia AS p on a.codProvincia = p.codProvincia';
+                INNER JOIN provincia AS p on a.codProvincia = p.codProvincia
+                WHERE propietario=idUsu';
             
         }else{
             $sql='SELECT a.nombre, edad, tlfno, p.nombre as Provincia
             FROM agenda AS a 
-                INNER JOIN provincia AS p on a.codProvincia = p.codProvincia';
+                INNER JOIN provincia AS p on a.codProvincia = p.codProvincia
+                WHERE propietario=idUsu';
         }
         //require_once __DIR__ . '/../nucleo/conexionBd.inc';
 
         try {
             $con= (new ConexionBd())->getConexion();
             $stm = $con->prepare($sql);
+            $stm->bindValue(':idUsu', $idUsu);
             $stm->execute();
             return $stm->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $ex) {

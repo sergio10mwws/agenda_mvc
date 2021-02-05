@@ -8,19 +8,24 @@ use  miId\App\fuente\Modelo\AmigoException;
 class AgendaController{
     public function verTodaAgenda()
     {
-        //require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
-        if(isset($_POST['buscar'])){
-            $datos=(new AgendaRepositorio())->findByNombreOrProvincia($_POST['buscador']);
+        if(isset($_SESSION['usuario'])){
+            $usu = $_SESSION['usuario'];
+            //require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
+            if(isset($_POST['buscar'])){
+                $datos=(new AgendaRepositorio())->findByNombreOrProvincia($_POST['buscador']);
+            }else{
+                $datos=(new AgendaRepositorio($usu))->findAllAmigosByUsu(true);
+            }
+            include __DIR__ . '/../../app/plantillas/mostrarAmigos.php';
         }else{
-            $datos=(new AgendaRepositorio())->findAllAmigos(true);
+            header('Location: index.php?ctl=login');
         }
-        include __DIR__ . '/../../app/plantillas/mostrarAmigos.php';
     }
 
     public function eliminarAmigo(){
         if(!isset($_POST['ok'])){
             //require_once __DIR__ . '/../Repositorio/AgendaRepositorio.inc';
-            $datos=(new AgendaRepositorio())->findAllAmigos(true); 
+            $datos=(new AgendaRepositorio())->findAllAmigosByUsu(true); 
             //die($var_dump($datos));
             include __DIR__ . '/../../app/plantillas/eliminarAmigos.php';
         }else{
@@ -34,7 +39,7 @@ class AgendaController{
                 $agendaRepositorio->deleteAmigo((int) $value);
                 $contador++;
             }
-            $datos=(new AgendaRepositorio())->findAllAmigos();
+            $datos=(new AgendaRepositorio())->findAllAmigosByUsu(true);
             $eliminados = $contador;
             include __DIR__ . '/../../app/plantillas/eliminarAmigos.php';
         }

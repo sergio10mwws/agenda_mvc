@@ -43,7 +43,7 @@ class Registro
             if (!$this->setTlfno(sanea($datos['tlfno']))) {
                 $error['tlfno'] = 'Error en teléfono';
             }
-            if (isset($error)) {
+            if(isset($error)) {
                 throw new AmigoException('Datos erróneos', $error);
             }
         }
@@ -92,7 +92,7 @@ class Registro
         }
         $this->apellidos = $apellidos;
 
-        return $this;
+        return true;
     }
 
     /**
@@ -115,7 +115,7 @@ class Registro
         }
         $this->calle = $calle;
 
-        return $this;
+        return true;
     }
 
     /**
@@ -138,7 +138,7 @@ class Registro
         }
         $this->ciudad = $ciudad;
 
-        return $this;
+        return true;
     }
 
     /**

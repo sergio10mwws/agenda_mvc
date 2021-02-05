@@ -40,7 +40,7 @@
            aplicación
        -->
     <a href="index.php?ctl=inicio">Inicio</a> |
-    <?php if (isset($_SESSION['login'])) :   ?>
+    <?php if (isset($_SESSION['usuario'])) :   ?>
       <a href="index.php?ctl=agregar">Agregar Amigo</a> |
       <a href="index.php?ctl=ver">Ver la agenda</a> |
       <a href="index.php?ctl=quitar">Quitar un amigo</a> |
@@ -55,6 +55,11 @@
            controlador (y método) que debe procesar la petición
       -->
     <hr>
+    <?php if (isset($_SESSION['usuario'])) { ?>
+      <div class="saludo">
+        Hola <?= $_SESSION['nombre']    ?>
+      </div>
+    <?php } ?>
   </nav>
   <div id="contenido">
     <!-- el id css facilita (si se define) la definición del aspecto visual
