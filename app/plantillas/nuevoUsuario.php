@@ -21,6 +21,8 @@ ob_start();
         <fieldset>
             <legend>Dirección</legend>
             <label>Calle: <input type="text" name="datos[calle]" required size="60"></label>
+            <?= isset($errores['calle']) ? 'Error en la calle' : ''   ?>
+            <br>
             <label>Ciudad: <input type="text" name="datos[ciudad]" required></label>
             <label>Provincia <input type="text" name="datos[provincia]"></label>
             <label>CP: <input type="text" name="datos[cp]" required></label>
