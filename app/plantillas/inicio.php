@@ -16,9 +16,14 @@
 <?php ob_start() ?>
 
 <h1><?= $datos['mensaje'] ?></h1>
-<p>Hoy es <?= $datos['dia'] ?> </p><br>
+<p>Hoy es <?= $datos['dia'] ?> </p>
+<br>
 Son las <?= $datos['hora'] ?>
-
+<br>
+<?php echo password_hash('admin', PASSWORD_DEFAULT) ?>
+<br>
+<p>sergio</p>
+<?php echo password_hash('123Abc??', PASSWORD_DEFAULT) ?>
 <?php $contenido = ob_get_clean() ?>
 
 <?php include 'base.php' ?>

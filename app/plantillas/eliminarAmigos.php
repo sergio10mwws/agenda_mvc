@@ -11,7 +11,6 @@ if (isset($eliminados)) {
 }
 ?>
 
-
 <h1>Eliminar amigos</h1>
 <?php
 if ($j) {

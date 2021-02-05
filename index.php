@@ -3,8 +3,16 @@
 session_start();
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/fuente/Controlador/defaultController.inc'; /*controladores */
-require_once __DIR__ . '/fuente/Controlador/AgendaController.inc'; /*controladores */
+spl_autoload_register(function (string $clase) {
+  if (strpos($clase, 'miId\\App\\') === 0) {
+    $path = str_replace('miId\\App\\', '', $clase);
+    require_once __DIR__ . '/' . $path . '.inc';
+  }
+});
+
+//require_once __DIR__ . '/fuente/Controlador/defaultController.inc'; /*controladores */
+//require_once __DIR__ . '/fuente/Controlador/AgendaController.inc'; /*controladores */
+//require_once __DIR__ . '/fuente/Controlador/LoginController.inc'; /*Ubicación del archivo de rutas*/
 require_once __DIR__ . '/app/conf/rutas.inc'; /*Ubicación del archivo de rutas*/
 
 

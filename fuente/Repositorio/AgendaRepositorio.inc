@@ -1,4 +1,8 @@
 <?php
+namespace miId\App\fuente\Repositorio;
+
+use miId\App\fuente\nucleo\ConexionBd;
+use miId\App\fuente\Modelo\Amigo;
 
 class AgendaRepositorio
 {
@@ -14,16 +18,16 @@ class AgendaRepositorio
             FROM agenda AS a 
                 INNER JOIN provincia AS p on a.codProvincia = p.codProvincia';
         }
-        require_once __DIR__ . '/../../core/conexionBd.inc';
+        //require_once __DIR__ . '/../nucleo/conexionBd.inc';
 
         try {
             $con= (new ConexionBd())->getConexion();
             $stm = $con->prepare($sql);
             $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $ex) {
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $ex) {
             throw $ex;
-        } catch (Exception $ex){
+        } catch (\Exception $ex){
             throw $ex;
         } finally{
             $stm=null;
@@ -40,27 +44,48 @@ class AgendaRepositorio
         return [];
     }
 
-    public function addAmigo(array $amigo):bool{
+    public function addAmigo(Amigo $amigo):bool{
         $sql = 'INSERT INTO agenda (nombre,edad,tlfno,p.codProvincia)
-        SELECT :nombre, :edad, :tefno, codProvincia
+        SELECT :nombre, :edad, :tfno, codProvincia
         FROM provincia as p
         WHERE p.nombre = :provincia';
-        return true;
+        
+        //require_once __DIR__ . '/../nucleo/conexionBd.inc';
+
+        try {
+            $con= (new ConexionBd())->getConexion();
+            $stn = $con->prepare($sql);
+            $stn -> bindValue (':nombre', $amigo->getNombre());
+            $stn -> bindValue (':edad', $amigo->getEdad());
+            $stn -> bindValue (':tfno', $amigo->getTlfno());
+            $stn -> bindValue (':provincia', $amigo->getCiudad());
+            return $stn -> execute();
+        } catch (\PDOException $ex) {
+            throw $ex;
+            return false;
+        } catch (\Exception $ex){
+            throw $ex;
+            return false;
+        }finally{
+            unset($stn);
+            unset($con);
+        }
+
     }
 
     public function deleteAmigo(int $id):bool{
         $sql = 'DELETE FROM agenda WHERE idAgenda = :id';
         try {
-            require_once __DIR__ . '/../../core/conexionBd.inc';
+            //require_once __DIR__ . '/../nucleo/conexionBd.inc';
             $con= (new ConexionBd())->getConexion();
             $con->beginTransaction();
             $stn=$con->prepare($sql);
             $stn->bindParam(':id',$id);
             $v=$stn->execute();
             $con->commit();
-        } catch (PDOException $ex) {
+        } catch (\PDOException $ex) {
             throw $ex;
-        } catch (Exception $ex){
+        } catch (\Exception $ex){
             throw $ex;
         } finally{
             $stn=null;
@@ -69,4 +94,28 @@ class AgendaRepositorio
 
         return $v;
     }
+
+    public function findByNombreOrProvincia(string $dato):array{
+        $sql="SELECT a.nombre, edad, tlfno, p.nombre as Provincia, idAgenda
+        FROM agenda AS a 
+            INNER JOIN provincia AS p on a.codProvincia = p.codProvincia
+            WHERE   p.nombre LIKE '%'+:dato+'%'
+            OR      a.nombre LIKE '%:dato+'%'";
+            //require_once __DIR__ . '/../nucleo/conexionBd.inc';
+            try {
+                $con= (new ConexionBd())->getConexion();
+                $stm = $con->prepare($sql);
+                $stm->execute();
+                return $stm->fetchAll(\PDO::FETCH_ASSOC);
+            } catch (\PDOException $ex) {
+                throw $ex;
+            } catch (\Exception $ex){
+                throw $ex;
+            } finally{
+                $stm=null;
+                $con=null;
+            }
+    }
 }
+
+

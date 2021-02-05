@@ -14,9 +14,15 @@
 */
 $mapeoRutas =
   array('inicio' =>
-          array('controller' =>'defaultController', 'action' =>'inicio'),
+          array('controller' =>'miId\App\fuente\Controlador\defaultController', 'action' =>'inicio'),
         'ver' =>
-          array('controller' =>'AgendaController', 'action' =>'verTodaAgenda'),
+          array('controller' =>'miId\App\fuente\Controlador\AgendaController', 'action' =>'verTodaAgenda'),
         'quitar' =>
-          array('controller' =>'AgendaController', 'action' =>'eliminarAmigo'),
+          array('controller' =>'miId\App\fuente\Controlador\AgendaController', 'action' =>'eliminarAmigo'),
+        'agregar' =>
+          array('controller' =>'miId\App\fuente\Controlador\AgendaController', 'action' =>'agregaAmigo'),
+        'login' =>
+          array('controller' =>'miId\App\fuente\Controlador\LoginController', 'action' =>'iniciaSesion'),
+        'logOut' =>
+          array('controller' =>'miId\App\fuente\Controlador\LoginController', 'action' =>'cierraSesion'), 
        );

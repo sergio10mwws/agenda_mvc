@@ -14,7 +14,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <?php include  __DIR__ . '/../../web/include/js.inc' ?>
+  <?php include  __DIR__ . '/../../web/include/css_js.inc' ?>
   <style>
     header {
       background-color: orange;
@@ -30,7 +30,7 @@
 
 <body>
   <header>
-    <h1 id="headerBase">Agenda de Amigos</h1>
+    <h1 id="headerBase">Agenda de Amigos de Sergio</h1>
   </header>
   <nav>
     <hr>
@@ -40,9 +40,15 @@
            aplicación
        -->
     <a href="index.php?ctl=inicio">Inicio</a> |
-    <a href="index.php?ctl=agregar">Agregar Amigo</a> |
-    <a href="index.php?ctl=ver">Ver la agenda</a> |
-    <a href="index.php?ctl=quitar">Quitar un amigo</a> |
+    <?php if (isset($_SESSION['login'])) :   ?>
+      <a href="index.php?ctl=agregar">Agregar Amigo</a> |
+      <a href="index.php?ctl=ver">Ver la agenda</a> |
+      <a href="index.php?ctl=quitar">Quitar un amigo</a> |
+      <a href="index.php?ctl=logOut">Cerrar sesión</a>
+    <?php else :   ?>
+      <a href="index.php?ctl=login">Iniciar sesión</a>
+    <?php endif;   ?>
+
     <!-- En general, la mayoría de los enlaces serán a la página index.php
            y una asignación a la variable 'ctl'. El valor de la variable deberá
            ser analizada en la página index.php de cara a encontrar la ruta del
@@ -63,7 +69,8 @@
     <p align="center">- Pie de página -</p>
     <address>
       Juan Nadie
-      Escríbeme a <a href="Malito: juan@gmail.com"></a>
+      <br>
+      Escríbeme a <a href="Malito: juan@gmail.com">juan@gmail.com</a>
     </address>
   </footer>
 </body>
